@@ -1,0 +1,41 @@
+name: Info Workflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/**"
+      - ".github/workflows/01-info.yml"
+      - "README.md"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "scripts/**"
+      - ".github/workflows/01-info.yml"
+      - "README.md"
+
+  workflow_dispatch:
+
+jobs:
+  info:
+    name: Show basic information
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Skripte ausführbar machen
+        run: chmod +x scripts/*.sh tests/*.sh
+
+      - name: Startinformation
+        run: |
+          source scripts/common.sh
+          print_header "Information"
+          echo "Die Funktion wurde aufgerufen und alles ist in Ordnung."
+
+      - name: Informationen werden angezeigt
+        run: bash scripts/01_show_info.sh

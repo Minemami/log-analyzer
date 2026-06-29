@@ -1,0 +1,28 @@
+name: Nightly Check
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  nightly-check:
+    name: Nightly Project Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository herunterladen
+        uses: actions/checkout@v4
+
+      - name: Skripte ausführbar machen
+        run: chmod +x scripts/*.sh tests/*.sh
+
+      - name: Projekt validieren
+        run: bash scripts/02_validate_project.sh
+
+      - name: Tests ausführen
+        run: bash scripts/04_run_tests.sh
+
+      - name: Report erstellen
+        run: bash scripts/05_build_report.sh

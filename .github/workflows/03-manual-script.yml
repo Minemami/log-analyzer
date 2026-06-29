@@ -1,0 +1,23 @@
+name: Manual Script
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "Name"
+        required: true
+        default: "Mina"
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository herunterladen
+        uses: actions/checkout@v4
+
+      - name: Skripte ausführbar machen
+        run: chmod +x scripts/*.sh
+
+      - name: Begrüßung ausführen
+        run: bash scripts/07_manual_greeting.sh "${{ github.event.inputs.username }}"
