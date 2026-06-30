@@ -1,14 +1,11 @@
-name: Nightly Check
+name: Cronjob Pipeline
 
 on:
   schedule:
-    - cron: "0 2 * * *"
-
-  workflow_dispatch:
+    - cron: "*/5 * * * *"
 
 jobs:
-  nightly-check:
-    name: Nightly Project Check
+  info:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +15,11 @@ jobs:
       - name: Skripte ausführbar machen
         run: chmod +x scripts/*.sh tests/*.sh
 
+      - name: Informationen anzeigen
+        run: bash scripts/01_show_info.sh
+
       - name: Projekt validieren
         run: bash scripts/02_validate_project.sh
 
-      - name: Tests ausführen
-        run: bash scripts/04_run_tests.sh
-
-      - name: Report erstellen
-        run: bash scripts/05_build_report.sh
+      - name: Logs analysieren
+        run: bash scripts/03_analyze_logs.sh
